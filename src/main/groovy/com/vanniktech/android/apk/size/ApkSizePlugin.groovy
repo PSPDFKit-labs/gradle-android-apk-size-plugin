@@ -21,7 +21,6 @@ final class ApkSizePlugin implements Plugin<Project> {
             variant.outputs.each { output ->
                 def slug = variant.name.capitalize()
                 def path = "${project.buildDir}/outputs/apksize/${variant.name}"
-
                 if (!variant.outputs.empty) {
                     slug += output.name.capitalize()
                     path += "/${output.name}"
@@ -30,7 +29,7 @@ final class ApkSizePlugin implements Plugin<Project> {
                 final def task = project.tasks.create "size${slug}Apk", ApkSizeTask
                 task.description = "Outputs APK / AAR size for ${variant.name} variant."
                 task.group = 'Reporting'
-                task.apk = output.outputFile
+                task.apkOutput = output
                 task.outputFile = project.file path + '.csv'
 
                 variant.assemble.doLast {

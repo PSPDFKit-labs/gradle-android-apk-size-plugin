@@ -3,15 +3,17 @@ package com.vanniktech.android.apk.size
 import groovy.transform.stc.ClosureParams
 import groovy.transform.stc.SimpleType
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Input
+import com.android.build.gradle.api.BaseVariantOutput
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
 class ApkSizeTask extends DefaultTask {
-    @Input File apk
+
+    def BaseVariantOutput apkOutput
     @OutputFile File outputFile
 
     @TaskAction def sizeApk() {
+        final File apk = apkOutput.outputFile
         final int apkSize = apk.length()
 
         withStyledOutput { out ->
